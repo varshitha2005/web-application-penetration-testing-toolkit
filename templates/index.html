@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Web Pentest Toolkit</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body class="homepage">
+
+    <div class="top-bar">
+        <a href="/logout" class="logout-btn">Logout</a>
+    </div>
+    <div class="container">
+        <h1>🔐 Web Pentest Toolkit</h1>
+        <p class="subtitle">
+            Scan websites for vulnerabilities, malware, and server misconfigurations.
+        </p>
+
+        <div class="card">
+            <form method="POST">
+                <input type="text" name="url" 
+                       placeholder="Enter target URL (https://example.com)" 
+                       required>
+                <button type="submit">Start Scan</button>
+            </form>
+        </div>
+    </div>
+
+</body>
+</html>

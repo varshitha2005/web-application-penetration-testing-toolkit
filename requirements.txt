@@ -1,0 +1,7 @@
+Flask
+requests
+beautifulsoup4
+python-nmap
+gunicorn
+flask-login
+flask-bcrypt

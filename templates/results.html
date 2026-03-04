@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Scan Results</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="container">
+
+    <h1>Scan Results for {{ data.URL }}</h1>
+
+    <!-- 🔥 DASHBOARD GRID -->
+    <div class="dashboard-grid">
+
+        <!-- Row 1 -->
+        <div class="dash-card">
+            <h2>🌐 Server Info</h2>
+            <p><strong>IP:</strong> {{ data.IP }}</p>
+            <p><strong>Server:</strong> {{ data.Server }}</p>
+        </div>
+
+        <div class="dash-card">
+            <h2>Open Ports</h2>
+            <p>{{ data["Open Ports"] }}</p>
+        </div>
+
+        <div class="dash-card">
+            <h2>SSL Status</h2>
+            <p>{{ data.SSL }}</p>
+        </div>
+
+        <!-- Row 2 -->
+        <div class="dash-card">
+            <h2>SQL Injection</h2>
+            <p>{{ data.SQL }}</p>
+        </div>
+
+        <div class="dash-card">
+            <h2>XSS</h2>
+            <p>{{ data.XSS }}</p>
+        </div>
+
+        <div class="dash-card">
+            <h2>Malware</h2>
+            <p>{{ data.Malware }}</p>
+        </div>
+
+        <!-- Row 3 -->
+        <div class="dash-card">
+            <h2>Missing Headers</h2>
+            <p>{{ data["Missing Headers"] }}</p>
+        </div>
+
+        <div class="dash-card">
+            <h2>Directory Listing</h2>
+            <p>{{ data["Directory Listing"] }}</p>
+        </div>
+
+    </div>
+
+    <!-- 🔥 BELOW GRID -->
+    <div class="risk-summary">
+        <h2>Overall Security Assessment</h2>
+
+        <div class="risk-score">
+            Risk Score: {{ risk_score }}/100
+        </div>
+
+        <div class="severity severity-{{ severity }}">
+            Severity Level: {{ severity }}
+        </div>
+
+        <div class="issue-list">
+            <h4>Detected Issues:</h4>
+            <ul>
+                {% for issue in issues %}
+                <li>{{ issue }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        </div>
+
+    <!-- 🔥 BELOW THAT -->
+    <div class="chart-section">
+        <h2>📊 Vulnerability Chart</h2>
+        <img src="/static/chart.png" width="500">
+    </div>
+
+    <div class="buttons">
+        <a href="/static/report.pdf" class="btn-green" download>Download PDF Report</a>
+        <a href="/" class="btn-gray">Scan Another Website</a>
+    </div>
+
+</div>
+
+</body>
+</html>
