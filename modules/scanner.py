@@ -1,14 +1,30 @@
-import nmap
+import socket
 
 def scan_ports(ip):
-    scanner = nmap.PortScanner()
-    scanner.scan(ip, '1-1024')
+
+    common_ports = [80, 443]
     open_ports = []
 
-    for proto in scanner[ip].all_protocols():
-        ports = scanner[ip][proto].keys()
-        for port in ports:
-            if scanner[ip][proto][port]['state'] == 'open':
-                open_ports.append(port)
+    for port in common_ports:
+
+        try:
+            sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            sock.settimeout(1)
+
+            result = sock.connect_ex((ip, port))
+
+            if result == 0:
+                open_ports.append({
+                    "port": port,
+                    "service": "open"
+                })
+
+            sock.close()
+
+        except:
+            continue
+
+    if not open_ports:
+        return ["No open ports found"]
 
     return open_ports

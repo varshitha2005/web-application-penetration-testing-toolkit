@@ -1,21 +1,34 @@
 import requests
 import socket
 
+HEADERS = {
+    "User-Agent": "Mozilla/5.0 SecurityScanner"
+}
+
 def get_server_info(url):
+
     try:
-        response = requests.get(url, timeout=5)
-        headers = response.headers
-        server = headers.get('Server', 'Unknown')
+        r = requests.get(url, headers=HEADERS, timeout=5)
+
+        server = r.headers.get("Server", "Unknown")
+
         return {
-            "status_code": response.status_code,
+            "status_code": r.status_code,
             "server": server
         }
-    except:
-        return {"error": "Could not connect"}
+
+    except Exception as e:
+        return {
+            "status_code": "Error",
+            "server": str(e)
+        }
+
 
 def get_ip_address(url):
+
     try:
-        hostname = url.replace("https://", "").replace("http://", "").split("/")[0]
-        return socket.gethostbyname(hostname)
+        domain = url.replace("http://", "").replace("https://", "").split("/")[0]
+        ip = socket.gethostbyname(domain)
+        return ip
     except:
-        return "Unable to resolve"
+        return "IP lookup failed"
