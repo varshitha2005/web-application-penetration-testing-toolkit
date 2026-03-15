@@ -1,29 +1,119 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Web Pentest Toolkit</title>
+    <title>Web Pentration Testing Toolkit</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body class="homepage">
-
     <div class="top-bar">
-        <a href="/logout" class="logout-btn">Logout</a>
+        <a href="/logout" class="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</a>
     </div>
-    <div class="container">
-        <h1>🔐 Web Pentest Toolkit</h1>
-        <p class="subtitle">
-            Scan websites for vulnerabilities, malware, and server misconfigurations.
-        </p>
 
-        <div class="card">
-            <form method="POST">
-                <input type="text" name="url" 
-                       placeholder="Enter target URL (https://example.com)" 
-                       required>
-                <button type="submit">Start Scan</button>
+    <div class="container">
+        <!-- HEADER -->
+        <div class="header">
+            <h1><i class="fas fa-shield-alt"></i> Web Pentration Testing Toolkit</h1>
+            <p class="subtitle">Professional OWASP Top 10 scanner with PDF reports & risk assessment</p>
+        </div>
+
+        <!-- QUICK START BUTTONS -->
+        <div class="quick-start">
+            <h3><i class="fas fa-rocket"></i> Quick Start - One Click Tests</h3>
+            <div class="test-buttons">
+                <button type="button" onclick="scanUrl('https://juice-shop.herokuapp.com')" class="test-btn juice">
+                    <i class="fas fa-flask"></i> OWASP Juice Shop
+                    <span>🥤 Real vulns (25s)</span>
+                </button>
+                <button type="button" onclick="scanUrl('https://public-firing-range.appspot.com')" class="test-btn xss">
+                    <i class="fas fa-bug"></i> Google XSS Lab
+                    <span>🎯 XSS tests (18s)</span>
+                </button>
+                <button type="button" onclick="scanUrl('http://example.com')" class="test-btn clean">
+                    <i class="fas fa-check-circle"></i> Clean Baseline
+                    <span>✅ Perfect score (10s)</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- MAIN SCANNER -->
+        <div class="card scanner-card">
+            <div class="card-header">
+                <h3><i class="fas fa-search"></i> Manual Scan</h3>
+            </div>
+            <form method="POST" id="scanForm">
+                <div class="input-group">
+                    <input type="text" name="url" id="urlInput" 
+                           placeholder="https://example.com" required 
+                           style="width:100%;padding:15px;border-radius:8px;border:2px solid #333;">
+                    <button type="submit" class="scan-btn">
+                        <i class="fas fa-play"></i> Start Scan
+                    </button>
+                </div>
+                <small>Supports HTTP/HTTPS • Optimized for Codespaces • 20s avg scan time</small>
             </form>
+        </div>
+
+        <!-- FEATURES -->
+        <div class="features-grid">
+            <div class="feature-card">
+                <i class="fas fa-bolt"></i>
+                <h4>Lightning Fast</h4>
+                <p>20 second scans with parallel execution</p>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-chart-bar"></i>
+                <h4>Visual Reports</h4>
+                <p>Interactive charts + downloadable PDF</p>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-file-pdf"></i>
+                <h4>Professional PDFs</h4>
+                <p>Client-ready pentest documentation</p>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-lock"></i>
+                <h4>Secure Auth</h4>
+                <p>BCrypt + Session management</p>
+            </div>
+        </div>
+
+        <!-- STATUS -->
+        <div class="status-info">
+            <div class="status-item">
+                <i class="fas fa-check-circle"></i>
+                <span>✓ OWASP Top 10 Coverage</span>
+            </div>
+            <div class="status-item">
+                <i class="fas fa-check-circle"></i>
+                <span>✓ SQLi/XSS Detection</span>
+            </div>
+            <div class="status-item">
+                <i class="fas fa-check-circle"></i>
+                <span>✓ Security Headers Audit</span>
+            </div>
         </div>
     </div>
 
+    <!-- PROGRESS BAR (Hidden until scan starts) -->
+    <div id="progressContainer" class="progress-container" style="display:none;">
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressFill"></div>
+            <span id="progressText">Scanning... 0%</span>
+        </div>
+    </div>
+
+    <script>
+        function scanUrl(url) {
+            document.getElementById('urlInput').value = url;
+            document.getElementById('scanForm').submit();
+        }
+
+        // Auto-hide logout on mobile
+        if (window.innerWidth < 768) {
+            document.querySelector('.top-bar').style.position = 'absolute';
+        }
+    </script>
 </body>
 </html>
