@@ -377,3 +377,182 @@ button:hover {
     line-height: 1.5;
 }
 
+/* ========================================
+   RESULTS PAGE - Match image-2.jpg exactly
+======================================== */
+.results-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+.results-header {
+    text-align: center;
+    color: #e2e8f0;
+    margin-bottom: 2rem;
+    font-size: 2.2rem;
+    font-weight: 600;
+}
+
+.cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.card {
+    background: rgba(17, 24, 39, 0.9);
+    border: 1px solid #374151;
+    border-radius: 16px;
+    padding: 1.8rem;
+    backdrop-filter: blur(20px);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+}
+
+.card.server::before { background: #4ecdc4; }
+.card.ports::before { background: #f59e0b; }
+.card.ssl::before { background: #8b5cf6; }
+.card.sqli::before { background: #3b82f6; }
+.card.xss::before { background: #f59e0b; }
+.card.malware::before { background: #ef4444; }
+.card.headers::before { background: #10b981; }
+.card.dir::before { background: #f97316; }
+.card.risk::before { background: #8b5cf6; }
+
+.card h3 {
+    color: #4ecdc4;
+    margin-bottom: 0.8rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+.card p {
+    color: #e2e8f0;
+    font-size: 1.6rem;
+    font-weight: 700;
+    margin: 0;
+}
+
+.risk-score {
+    font-size: 2.5rem !important;
+    color: #4ecdc4 !important;
+    background: linear-gradient(135deg, #4ecdc4, #44b3a0);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.risk-badges {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.2rem;
+    margin: 2.5rem 0;
+}
+
+.badge {
+    background: rgba(17, 24, 39, 0.9);
+    border: 1px solid #374151;
+    border-radius: 12px;
+    padding: 1.5rem;
+    text-align: center;
+}
+
+.badge-low { border-left: 5px solid #10b981; }
+.badge-high { border-left: 5px solid #ef4444; }
+
+.badge h4 {
+    color: #94a3b8;
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+}
+
+.badge p {
+    color: #e2e8f0;
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin: 0;
+}
+
+.chart-container {
+    background: rgba(17, 24, 39, 0.9);
+    border: 1px solid #374151;
+    border-radius: 16px;
+    padding: 2.5rem;
+    margin: 2.5rem 0;
+    text-align: center;
+    backdrop-filter: blur(20px);
+}
+
+.chart-container h3 {
+    color: #4ecdc4;
+    margin-bottom: 1.5rem;
+    font-size: 1.5rem;
+}
+
+#vulnChart {
+    max-height: 300px;
+    max-width: 300px;
+    margin: 0 auto;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 1.5rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 3rem;
+}
+
+.btn-pdf {
+    background: linear-gradient(135deg, #10b981, #059669);
+    padding: 1.2rem 2.5rem;
+    border: none;
+    border-radius: 12px;
+    color: white;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+}
+
+.btn-scan {
+    background: linear-gradient(135deg, #6b7280, #4b5563);
+    padding: 1.2rem 2.5rem;
+    border: none;
+    border-radius: 12px;
+    color: white;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+}
+
+.btn-pdf:hover, .btn-scan:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.3);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .cards-grid {
+        grid-template-columns: 1fr;
+    }
+    .action-buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+}
+

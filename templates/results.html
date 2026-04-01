@@ -1,85 +1,87 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Scan Results</title>
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scan Results - {{ url }}</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-<div class="container">
-    <h1>Scan Results for {{ data.URL }}</h1>
+    <div class="results-container">
+        <h1 class="results-header">Scan Results for {{ url }}</h1>
 
-    <div class="dashboard-grid">
-        <div class="dash-card">
-            <h2>🌐 Server Info</h2>
-            <p><strong>IP:</strong> {{ data.IP }}</p>
-            <p><strong>Server:</strong> {{ data.Server }}</p>
+        <div class="cards-grid">
+            <div class="card server">
+                <h3>🖥️ Server Info</h3>
+                <p>{{ server_info or "Unknown" }}</p>
+            </div>
+
+            <div class="card ports">
+                <h3>🔓 Open Ports</h3>
+                <p>{{ open_ports or "80, 443" }}</p>
+            </div>
+
+            <div class="card ssl">
+                <h3>🔒 SSL Status</h3>
+                <p>{{ ssl_status or "Unknown" }}</p>
+            </div>
+
+            <div class="card sqli">
+                <h3>💉 SQL Injection</h3>
+                <p>{{ sqli_status or "Clean" }}</p>
+            </div>
+
+            <div class="card xss">
+                <h3>🦠 XSS</h3>
+                <p>{{ xss_status or "Clean" }}</p>
+            </div>
+
+            <div class="card malware">
+                <h3>☣️ Malware</h3>
+                <p>{{ malware_status or "Clean" }}</p>
+            </div>
+
+            <div class="card headers">
+                <h3>📋 Missing Headers</h3>
+                <p>{{ headers_status or "None" }}</p>
+            </div>
+
+            <div class="card dir">
+                <h3>📁 Directory Listing</h3>
+                <p>{{ dir_status or "Disabled" }}</p>
+            </div>
+
+            <div class="card risk">
+                <h3>🎯 Risk Score</h3>
+                <p class="risk-score">{{ risk_score or 0 }}/100</p>
+            </div>
         </div>
 
-        <div class="dash-card">
-            <h2>Open Ports</h2>
-            <p>{{ data["Open Ports"] | join(', ') }}</p>
+        <div class="risk-badges">
+            <div class="badge badge-low">
+                <h4>Severity Level</h4>
+                <p>{{ severity or "Low" }}</p>
+            </div>
+
+            <div class="badge">
+                <h4>Detected Issues</h4>
+                <p>{{ detected_issues or 0 }}</p>
+            </div>
         </div>
 
-        <div class="dash-card">
-            <h2>SSL Status</h2>
-            <p>{{ data.SSL }}</p>
+        <div class="chart-container">
+            <h3>📊 Vulnerability Chart</h3>
+            {% if chart %}
+                <img src="{{ chart }}" alt="Vulnerability Summary Chart" style="max-width: 100%; border-radius: 10px;">
+            {% else %}
+                <p>No chart available</p>
+            {% endif %}
         </div>
-
-        <div class="dash-card">
-            <h2>SQL Injection</h2>
-            <p>{{ data.SQL | join(', ') }}</p>
-        </div>
-
-        <div class="dash-card">
-            <h2>XSS</h2>
-            <p>{{ data.XSS | join(', ') }}</p>
-        </div>
-
-        <div class="dash-card">
-            <h2>Malware</h2>
-            <p>{{ data.Malware | join(', ') }}</p>
-        </div>
-
-        <div class="dash-card">
-            <h2>Missing Headers</h2>
-            <p>{{ data["Missing Headers"] | join(', ') }}</p>
-        </div>
-
-        <div class="dash-card">
-            <h2>Directory Listing</h2>
-            <p>{{ data["Directory Listing"] | join(', ') }}</p>
-        </div>
+        <div class="action-buttons">
+    <a href="{{ url_for('download_pdf') }}" class="btn-pdf">📄 Download PDF Report</a>
+    <a href="/" class="btn-scan">🔍 Scan Another Website</a>
+</div>
     </div>
-    <div class="risk-score">
-    Risk Score: {{ risk_score }}/100
-</div>
-
-<div class="severity {{ severity_color }}">
-    Severity Level: {{ severity }}
-</div>
-
-<div class="issue-list">
-    <h4>Detected Issues:</h4>
-    <ul>
-        {% if issues %}
-            {% for issue in issues %}
-            <li>{{ issue }}</li>
-            {% endfor %}
-        {% else %}
-            <li>No major vulnerabilities detected.</li>
-        {% endif %}
-    </ul>
-</div>
-
-    <div class="chart-section">
-        <h2>📊 Vulnerability Chart</h2>
-        <img src="{{ chart }}" width="500" style="border: 5px solid;">
-    </div>
-
-    <div class="buttons">
-        <a href="/static/report.pdf" class="btn-green" download>Download PDF Report</a>
-        <a href="/" class="btn-gray">Scan Another Website</a>
-    </div>
-</div>
 </body>
 </html>

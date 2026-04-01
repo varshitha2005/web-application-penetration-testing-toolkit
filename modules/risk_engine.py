@@ -1,54 +1,52 @@
 def calculate_risk(report_data):
+    """
+    Calculates a normalized risk score (0-100) based on vulnerability findings.
+    Returns: (score, severity, issue_list, color_class)
+    """
     score = 0
     issues = []
-    
-    # SQL Injection - CRITICAL
-    sql_vulns = len([x for x in report_data["SQL"] if "SQLi" in str(x) or "SQL Injection" in str(x)])
-    if sql_vulns > 0:
-        score += sql_vulns * 25  # Max 50 for multiple SQLi
-        issues.append(f"SQL Injection ({sql_vulns})")
-    
-    # XSS - HIGH
-    xss_vulns = len([x for x in report_data["XSS"] if "XSS" in str(x)])
-    if xss_vulns > 0:
-        score += xss_vulns * 15  # Max 30 for multiple XSS
-        issues.append(f"XSS ({xss_vulns})")
-    
-    # Missing Headers - MEDIUM  
-    headers_missing = len(report_data["Missing Headers"])
-    if headers_missing > 0:
-        score += min(headers_missing * 2, 10)  # Max 10 points
-        issues.append(f"Missing Headers ({headers_missing})")
-    
-    # Malware - HIGH
-    if "suspicious code found" in str(report_data["Malware"]).lower():
-        score += 20
-        issues.append("Malware")
-    
-    # Directory Listing - MEDIUM
-    if "Enabled" in str(report_data["Directory Listing"]):
-        score += 8
+
+    # 1. SQL Injection (Critical: Weighted 30 per instance)
+    sql_count = len(report_data.get("SQL", []))
+    if sql_count > 0:
+        score += min(sql_count * 30, 60)
+        issues.append(f"SQLi ({sql_count})")
+
+    # 2. XSS (High: Weighted 20 per instance)
+    xss_count = len(report_data.get("XSS", []))
+    if xss_count > 0:
+        score += min(xss_count * 20, 40)
+        issues.append(f"XSS ({xss_count})")
+
+    # 3. Malware (Critical: Boolean check)
+    # Using 'clean' check to be safe
+    malware_data = str(report_data.get("Malware", "")).lower()
+    if "clean" not in malware_data and "error" not in malware_data:
+        score += 30
+        issues.append("Malware Detected")
+
+    # 4. Directory Listing (Medium: 10 pts)
+    if "enabled" in str(report_data.get("Directory Listing", "")).lower():
+        score += 10
         issues.append("Directory Listing")
-    
-    # SSL - LOW
-    if "No SSL" in str(report_data["SSL"]):
-        score += 5
-        issues.append("No SSL")
-    
-    # CORRECT SEVERITY CLASSIFICATION
-    if score >= 60:
-        severity = "Critical"
-        severity_color = "bg-red-500"
-    elif score >= 35:
-        severity = "High" 
-        severity_color = "bg-orange-500"
+
+    # 5. Missing Headers (Low: 2 pts per header)
+    headers_missing = len(report_data.get("Missing Headers", []))
+    score += min(headers_missing * 2, 10)
+    if headers_missing > 0:
+        issues.append(f"Headers ({headers_missing})")
+
+    # Cap score at 100
+    score = min(score, 100)
+
+    # Classification
+    if score >= 70:
+        severity, color = "Critical", "bg-red-600"
+    elif score >= 40:
+        severity, color = "High", "bg-orange-500"
     elif score >= 15:
-        severity = "Medium"
-        severity_color = "bg-yellow-500"
+        severity, color = "Medium", "bg-yellow-500"
     else:
-        severity = "Low"
-        severity_color = "bg-green-500"
-    
-    print(f"🔢 Risk calculation: {score} points, {len(issues)} issues")
-    # Change the last lines in modules/risk_engine.py
-    return score, severity, issues, severity_color
+        severity, color = "Low", "bg-green-500"
+
+    return score, severity, issues, color

@@ -47,7 +47,7 @@ def gather(url):
 def get_server_info(url):
     """Get server banner from HTTP headers"""
     try:
-        r = requests.get(url, headers=HEADERS, timeout=8)
+        r = requests.get(url, headers=HEADERS, timeout=5)
         server = r.headers.get("Server", "Unknown")
         powered_by = r.headers.get("X-Powered-By", "")
         return {
