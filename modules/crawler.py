@@ -45,7 +45,7 @@ def find_endpoints(base_url):
         except:
             continue
     
-    print(f"✅ Crawler found {len(results['forms'])} forms!")
+    print(f" Crawler found {len(results['forms'])} forms!")
     return results
 
 # YOUR ORIGINAL CODE (KEEP EXACTLY AS IS - it's perfect!)

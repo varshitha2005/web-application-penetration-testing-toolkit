@@ -13,47 +13,47 @@
 
         <div class="cards-grid">
             <div class="card server">
-                <h3>🖥️ Server Info</h3>
+                <h3>Server Info</h3>
                 <p>{{ server_info or "Unknown" }}</p>
             </div>
 
             <div class="card ports">
-                <h3>🔓 Open Ports</h3>
+                <h3>Open Ports</h3>
                 <p>{{ open_ports or "80, 443" }}</p>
             </div>
 
             <div class="card ssl">
-                <h3>🔒 SSL Status</h3>
+                <h3>SSL Status</h3>
                 <p>{{ ssl_status or "Unknown" }}</p>
             </div>
 
             <div class="card sqli">
-                <h3>💉 SQL Injection</h3>
+                <h3>SQL Injection</h3>
                 <p>{{ sqli_status or "Clean" }}</p>
             </div>
 
             <div class="card xss">
-                <h3>🦠 XSS</h3>
+                <h3>XSS</h3>
                 <p>{{ xss_status or "Clean" }}</p>
             </div>
 
             <div class="card malware">
-                <h3>☣️ Malware</h3>
+                <h3>Malware</h3>
                 <p>{{ malware_status or "Clean" }}</p>
             </div>
 
             <div class="card headers">
-                <h3>📋 Missing Headers</h3>
+                <h3>Missing Headers</h3>
                 <p>{{ headers_status or "None" }}</p>
             </div>
 
             <div class="card dir">
-                <h3>📁 Directory Listing</h3>
+                <h3>Directory Listing</h3>
                 <p>{{ dir_status or "Disabled" }}</p>
             </div>
 
             <div class="card risk">
-                <h3>🎯 Risk Score</h3>
+                <h3>Risk Score</h3>
                 <p class="risk-score">{{ risk_score or 0 }}/100</p>
             </div>
         </div>
@@ -79,8 +79,8 @@
             {% endif %}
         </div>
         <div class="action-buttons">
-    <a href="{{ url_for('download_pdf') }}" class="btn-pdf">📄 Download PDF Report</a>
-    <a href="/" class="btn-scan">🔍 Scan Another Website</a>
+    <a href="{{ url_for('download_pdf') }}" class="btn-pdf">Download PDF Report</a>
+    <a href="/" class="btn-scan">Scan Another Website</a>
 </div>
     </div>
 </body>
