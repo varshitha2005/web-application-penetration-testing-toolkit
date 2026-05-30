@@ -1,4 +1,4 @@
-# Web Pentest Toolkit
+# Web Penetration Testing Toolkit
 
 A lightweight Flask-based web penetration testing toolkit for reconnaissance and basic vulnerability scanning. This project provides a browser UI with authentication, target scanning, issue reporting, and PDF export.
 
